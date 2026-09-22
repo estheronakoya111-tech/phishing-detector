@@ -43,22 +43,16 @@ export default function IntroGate({ children }: IntroGateProps) {
   const handleEnter = () => {
     localStorage.setItem(STORAGE_KEY, "true");
 
-    window.dispatchEvent(
-      new Event("estra-intro-change")
-    );
+    window.dispatchEvent(new Event("estra-intro-change"));
   };
 
-  return (
-    <>
-      {children}
+  if (isHomePage && !hasSeenIntro) {
+    return (
+      <AnimatePresence>
+        <IntroOverlay onEnter={handleEnter} />
+      </AnimatePresence>
+    );
+  }
 
-      {isHomePage && (
-        <AnimatePresence>
-          {!hasSeenIntro && (
-            <IntroOverlay onEnter={handleEnter} />
-          )}
-        </AnimatePresence>
-      )}
-    </>
-  );
+  return children;
 }
