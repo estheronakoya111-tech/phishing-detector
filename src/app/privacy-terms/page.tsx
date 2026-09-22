@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
@@ -108,7 +108,7 @@ const STACK = [
   "Google Safe Browsing",
 ];
 
-export default function LegalPage() {
+function LegalContent() {
   const searchParams = useSearchParams();
   const sectionParam = searchParams.get("section");
 
@@ -123,13 +123,11 @@ export default function LegalPage() {
 
   const doc = DOCS[activeTab];
 
-  // Reset the active section in the event handler, not in an effect
   const handleTabChange = (tab: Tab) => {
     setActiveTab(tab);
     setActiveSection(DOCS[tab].sections[0].id);
   };
 
-  // Scroll-spy for the sidebar
   useEffect(() => {
     const elements = DOCS[activeTab].sections
       .map((s) => document.getElementById(`${activeTab}-${s.id}`))
@@ -440,5 +438,13 @@ export default function LegalPage() {
         </footer>
       </div>
     </main>
+  );
+}
+
+export default function LegalPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen text-white/50 p-10">Loading...</div>}>
+      <LegalContent />
+    </Suspense>
   );
 }
