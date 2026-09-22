@@ -1,0 +1,78 @@
+type EstraLogoProps = {
+  className?: string;
+};
+
+export default function EstraLogo({ className }: EstraLogoProps) {
+  const logoBlue = "#8AA8FF";
+  const logoText = "#F1F4F8";
+
+  const lp = {
+    fill: "none",
+    stroke: logoText,
+    strokeWidth: 7,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+  };
+
+  return (
+    <svg
+      viewBox="0 0 500 100"
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="ESTRA"
+    >
+      {/* ICON */}
+      <rect
+        x="14"
+        y="19.5"
+        width="54"
+        height="13"
+        rx="6.5"
+        fill={logoBlue}
+        transform="rotate(9, 41, 26)"
+      />
+
+      <rect
+        x="23"
+        y="43.5"
+        width="36"
+        height="13"
+        rx="6.5"
+        fill={logoBlue}
+        transform="rotate(9, 41, 50)"
+      />
+
+      <rect
+        x="14"
+        y="67.5"
+        width="54"
+        height="13"
+        rx="6.5"
+        fill={logoBlue}
+        transform="rotate(9, 41, 74)"
+      />
+
+      {/* S */}
+      <path
+        {...lp}
+        d="M 152 20 C 152 14, 142 12, 130 12 C 115 12, 104 20, 104 31 C 104 43, 117 49, 130 53 C 145 57, 158 64, 158 76 C 158 87, 146 93, 131 93 C 115 93, 103 87, 101 82"
+      />
+
+      {/* T */}
+      <path {...lp} d="M 176 14 H 248" />
+      <path {...lp} d="M 212 14 V 88" />
+
+      {/* R */}
+      <path
+        {...lp}
+        d="M 272 88 V 14 H 298 C 318 14, 318 56, 298 56 H 272"
+      />
+
+      <path {...lp} d="M 288 56 L 326 88" />
+
+      {/* A */}
+      <path {...lp} d="M 346 88 L 382 12 L 418 88" />
+    </svg>
+  );
+}
