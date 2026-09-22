@@ -287,55 +287,46 @@ export default function AboutPage() {
               </div>
 
               {/* Graphical Display Box inside 3D Spatial Frame */}
-              <div className="rounded-xl border border-white/[0.08] bg-[#0B1020] p-5 font-mono text-xs text-white/60">
-                <div className="flex items-center justify-between border-b border-white/[0.06] pb-3 text-[11px] text-white/30">
-                  <span>INSPECT_STREAM // ESTRA_ENGINE</span>
-                  <span className="text-emerald-400">
-                    STATUS: ACTIVE
-                  </span>
+              <div className="mt-4 space-y-3">
+                <div className="rounded-lg border border-white/[0.04] bg-white/[0.02] p-3">
+                  <p className="text-[11px] text-white/40">
+                    INPUT_PAYLOAD
+                  </p>
+
+                  <p className="mt-1 text-white/80">
+                    &quot;URGENT: Your account has been suspended. Verify at https://secure-account-check.com&quot;
+                  </p>
                 </div>
 
-                <div className="mt-4 space-y-3">
-                  <div className="rounded-lg border border-white/[0.04] bg-white/[0.02] p-3">
-                    <p className="text-[11px] text-white/40">
-                      INPUT_PAYLOAD
-                    </p>
+                <div className="space-y-1.5 pt-2">
+                  <div className="flex justify-between text-[11px]">
+                    <span className="text-white/40">
+                      LANGUAGE FLAG
+                    </span>
 
-                    <p className="mt-1 text-white/80">
-                      &quot;URGENT: Your account has been suspended. Verify at https://secure-account-check.com&quot;
-                    </p>
+                    <span className="text-amber-300">
+                      URGENCY CLAIM
+                    </span>
                   </div>
 
-                  <div className="space-y-1.5 pt-2">
-                    <div className="flex justify-between text-[11px]">
-                      <span className="text-white/40">
-                        LANGUAGE FLAG
-                      </span>
+                  <div className="flex justify-between text-[11px]">
+                    <span className="text-white/40">
+                      LINK HOST
+                    </span>
 
-                      <span className="text-amber-300">
-                        URGENCY CLAIM
-                      </span>
-                    </div>
+                    <span className="text-rose-400">
+                      SUSPICIOUS TLD
+                    </span>
+                  </div>
 
-                    <div className="flex justify-between text-[11px]">
-                      <span className="text-white/40">
-                        LINK HOST
-                      </span>
+                  <div className="flex justify-between text-[11px]">
+                    <span className="text-white/40">
+                      CALCULATED RISK
+                    </span>
 
-                      <span className="text-rose-400">
-                        SUSPICIOUS TLD
-                      </span>
-                    </div>
-
-                    <div className="flex justify-between text-[11px]">
-                      <span className="text-white/40">
-                        CALCULATED RISK
-                      </span>
-
-                      <span className="text-rose-400">
-                        HIGH
-                      </span>
-                    </div>
+                    <span className="text-rose-400">
+                      HIGH
+                    </span>
                   </div>
                 </div>
               </div>

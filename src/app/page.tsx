@@ -35,7 +35,7 @@ export default function Page() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisStep, setAnalysisStep] = useState(0);
   const [result, setResult] = useState<AnalysisResult | null>(null);
-  const [analysisError, setAnalysisError] = useState(false);
+  const [analysisError, setAnalysisError] = useState<string | null>(null);
   const [analyzerKey, setAnalyzerKey] = useState(0);
 
   const analysisStartedAt = useRef<number | null>(null);
@@ -48,14 +48,14 @@ export default function Page() {
     }
 
     setResult(null);
-    setAnalysisError(false);
+    setAnalysisError(null);
     setAnalysisStep(0);
     setIsAnalyzing(true);
 
     analysisStartedAt.current = performance.now();
   };
 
-  const handleAnalysisError = () => {
+  const handleAnalysisError = (message?: string) => {
     if (resultTimeout.current !== null) {
       window.clearTimeout(resultTimeout.current);
       resultTimeout.current = null;
@@ -64,7 +64,9 @@ export default function Page() {
     analysisStartedAt.current = null;
     setIsAnalyzing(false);
     setAnalysisStep(0);
-    setAnalysisError(true);
+    setAnalysisError(
+      message || "We could not complete the analysis."
+    );
   };
 
   const handleResult = (analysisResult: AnalysisResult) => {
@@ -86,7 +88,7 @@ export default function Page() {
     resultTimeout.current = window.setTimeout(() => {
       setResult(analysisResult);
       setIsAnalyzing(false);
-      setAnalysisError(false);
+      setAnalysisError(null);
 
       resultTimeout.current = null;
       analysisStartedAt.current = null;
@@ -124,7 +126,7 @@ export default function Page() {
     setResult(null);
     setIsAnalyzing(false);
     setAnalysisStep(0);
-    setAnalysisError(false);
+    setAnalysisError(null);
 
     setAnalyzerKey((currentKey) => currentKey + 1);
 
@@ -200,12 +202,11 @@ export default function Page() {
 
             <div>
               <p className="font-sans text-sm font-medium text-foreground">
-                We could not complete the analysis.
+                {analysisError}
               </p>
 
               <p className="mt-1 font-sans text-xs leading-5 text-muted-foreground">
-                Check your internet connection or try again in a
-                moment.
+                Please wait a moment before trying again.
               </p>
             </div>
           </div>

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo, useRef, ChangeEvent, UIEvent } from "react";
@@ -22,7 +23,7 @@ type AnalysisResult = {
 interface AnalyzerInputProps {
   onResult: (result: AnalysisResult) => void;
   onAnalysisStart: () => void;
-  onAnalysisError: () => void;
+  onAnalysisError: (message?: string) => void;
 }
 
 // ==========================================
@@ -181,29 +182,39 @@ export default function AnalyzerInput({
     onAnalysisStart();
 
     try {
-      // Read base URL from environment variable, falling back to local port 8000 if not set
-const API_BASE_URL =
+      // Read base URL from environment variable,
+      // falling back to local port 8000 if not set
+      const API_BASE_URL =
+        process.env.NEXT_PUBLIC_API_BASE_URL ||
+        "http://127.0.0.1:8000";
 
-  process.env.NEXT_PUBLIC_API_BASE_URL ||
-  "http://127.0.0.1:8000";
+      const response = await fetch(`${API_BASE_URL}/analyze`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: text,
+        }),
+      });
 
-const response = await fetch(`${API_BASE_URL}/analyze`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    message: text,
-  }),
-});
-      if (!response.ok) {
-        throw new Error(
-          `Request failed: ${response.status}`
+      // Rate limit exceeded
+      if (response.status === 429) {
+        onAnalysisError(
+          "Too many analysis requests. Please wait a minute before trying again."
         );
+        return;
       }
 
-      const result: AnalysisResult =
-        await response.json();
+      // Other server errors
+      if (!response.ok) {
+        onAnalysisError(
+          "We could not complete the analysis. Please try again."
+        );
+        return;
+      }
+
+      const result: AnalysisResult = await response.json();
 
       // Send result back to Home
       onResult(result);
@@ -213,8 +224,10 @@ const response = await fetch(`${API_BASE_URL}/analyze`, {
       // Unlock the analyzer so the user can try again
       setHasSubmitted(false);
 
-      // Tell Home that analysis failed
-      onAnalysisError();
+      // Network / connection error
+      onAnalysisError(
+        "We could not reach the analysis service. Check your internet connection and try again."
+      );
     }
   };
 
@@ -321,3 +334,4 @@ const response = await fetch(`${API_BASE_URL}/analyze`, {
     </section>
   );
 }
+

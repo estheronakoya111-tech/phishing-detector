@@ -1,4 +1,14 @@
+"use client";
+
 import Link from "next/link";
+
+const handleNavigation = () => {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "auto",
+  });
+};
 
 export default function Footer() {
   return (
@@ -17,6 +27,8 @@ export default function Footer() {
         <nav className="flex items-center gap-6">
           <Link
             href="/about"
+            scroll={false}
+            onClick={handleNavigation}
             className="font-sans text-xs text-muted-foreground transition-colors hover:text-foreground"
           >
             About
@@ -24,6 +36,8 @@ export default function Footer() {
 
           <Link
             href="/privacy-terms?section=privacy"
+            scroll={false}
+            onClick={handleNavigation}
             className="font-sans text-xs text-muted-foreground transition-colors hover:text-foreground"
           >
             Privacy
@@ -31,6 +45,8 @@ export default function Footer() {
 
           <Link
             href="/privacy-terms?section=terms"
+            scroll={false}
+            onClick={handleNavigation}
             className="font-sans text-xs text-muted-foreground transition-colors hover:text-foreground"
           >
             Terms
